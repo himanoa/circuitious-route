@@ -1,6 +1,6 @@
 import { Client, } from "discord.js"
 import { getLogger, configure } from "log4js"
-import { Route } from "./route"
+import { routes } from "./default-handler"
 
 configure(
   {
@@ -18,12 +18,12 @@ configure(
 const logger = getLogger()
 const errorLogger = getLogger("error")
 const client = new Client()
-const routes: Route[] = []
 
 client.on("message", (message) => {
   if(!message.author.bot) {
     for(const route of routes) {
       const matched = message.content.match(route.matcher)
+      logger.info(`matched: ${matched} `)
       if(matched) {
         route.handler.reply(message, matched)
         break;
