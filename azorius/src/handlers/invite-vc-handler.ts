@@ -11,7 +11,7 @@ export class InviteVcHandler implements Handler {
       const voiceChannel = message.guild.channels.cache.find(channel => channel.name === channelName)
       if(voiceChannel && voiceChannel.type === "voice") {
         await (voiceChannel as VoiceChannel).join()
-        this.state.currentJoinedCoiceChannel = (voiceChannel as VoiceChannel)
+        this.state.currentJoinedVoiceChannel = (voiceChannel as VoiceChannel)
         message.reply("参加した")
       }
     }
