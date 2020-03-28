@@ -2,7 +2,7 @@ import { Message, VoiceChannel } from "discord.js"
 import { Handler } from "../handler"
 
 export class InviteVcHandler implements Handler {
-  async reply(message: Message, matched: RegExpMatchArray) {
+  async sendMessage(message: Message, matched: RegExpMatchArray) {
     const channelName = matched[1]
     if(message.guild) {
       const voiceChannel = message.guild.channels.cache.find(channel => channel.name === channelName)

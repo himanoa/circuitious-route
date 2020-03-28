@@ -25,7 +25,7 @@ client.on("message", (message) => {
       const matched = message.content.match(route.matcher)
       logger.info(`matched: ${matched} `)
       if(matched) {
-        route.handler.reply(message, matched)
+        route.handler.sendMessage(message, matched)
         break;
       }
     }

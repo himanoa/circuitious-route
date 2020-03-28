@@ -1,5 +1,5 @@
 import { Message } from "discord.js"
 
 export interface Handler {
-  reply(message: Message, matched: RegExpMatchArray): void
+  sendMessage(message: Message, matched: RegExpMatchArray): void
 }
