@@ -1,5 +1,5 @@
 import { VoiceChannel } from "discord.js"
 
-export type VcState {
+export type VcState = {
   currentJoinedVoiceChannel: VoiceChannel | null
 }

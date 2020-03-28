@@ -1,6 +1,6 @@
 import { Handler } from "./handler"
 
-export type Route {
+export type Route = {
   matcher: RegExp,
   handler: Handler
 }
