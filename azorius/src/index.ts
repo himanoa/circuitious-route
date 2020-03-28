@@ -1,6 +1,6 @@
 import { Client, } from "discord.js"
 import { getLogger, configure } from "log4js"
-import { routes } from "./default-handler"
+import { routes } from "./default-routes"
 
 configure(
   {
