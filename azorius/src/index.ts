@@ -29,9 +29,6 @@ client.on("message", (message) => {
         break;
       }
     }
-    const s = "ねこです";
-    message.reply(s)
-    logger.info(`発言: ${s}`)
   }
 })
 
