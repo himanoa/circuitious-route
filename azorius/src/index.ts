@@ -6,4 +6,4 @@ client.on("message", (message) => {
   message.reply("ねこです")
 })
 
-client.login()
+client.login(process.env.DISCORD_TOKEN)
