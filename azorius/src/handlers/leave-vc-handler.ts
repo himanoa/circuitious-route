@@ -1,7 +1,15 @@
 import { Message } from "discord.js"
+
 import { Handler } from "../handler"
+import { VcState } from "../vc-state"
 
 export class LeaveVcHandler implements Handler {
-  sendMessage(msg: Message, matched: RegExpMatchArray) {
+  constructor(private state: VcState ) {}
+  sendMessage(msg: Message) {
+    if(!this.state.currentJoinedVoiceChannel) {
+      msg.reply("現在ボイスチャンネルには参加していません")
+      return
+    }
+    this.state.currentJoinedVoiceChannel.leave()
   }
 }
