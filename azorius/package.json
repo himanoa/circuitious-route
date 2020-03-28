@@ -2,5 +2,12 @@
   "name": "azorius",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "jest": "^25.2.3",
+    "prettier": "^2.0.2",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
+  }
 }
