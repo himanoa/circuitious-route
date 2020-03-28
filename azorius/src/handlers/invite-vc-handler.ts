@@ -5,7 +5,7 @@ import { Handler } from "../handler"
 
 export class InviteVcHandler implements Handler {
   constructor(private state: VcState ) {}
-  async sendMessage(message: Message, matched: RegExpMatchArray) {
+  async run(message: Message, matched: RegExpMatchArray) {
     const channelName = matched[1]
     if(message.guild) {
       const voiceChannel = message.guild.channels.cache.find(channel => channel.name === channelName)

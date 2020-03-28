@@ -5,7 +5,7 @@ import { VcState } from "../vc-state"
 
 export class LeaveVcHandler implements Handler {
   constructor(private state: VcState ) {}
-  sendMessage(msg: Message) {
+  run(msg: Message) {
     if(!this.state.currentJoinedVoiceChannel) {
       msg.reply("現在ボイスチャンネルには参加していません")
       return
