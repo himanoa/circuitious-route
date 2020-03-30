@@ -87,7 +87,7 @@ describe("issueLoginUrlHandler", () => {
   describe("when db error", () => {
     const executedQuery: string[] = []
     const dummyDeps = {
-      executeQuery: Promise.resolve((sql: SQLStatement | string) => {
+      executeQuery: Promise.resolve(() => {
         throw Error("DB")
       }),
       generateRandomString: () => "foobar"
