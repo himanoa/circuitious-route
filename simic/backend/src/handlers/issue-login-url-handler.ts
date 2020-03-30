@@ -18,7 +18,7 @@ export const issueLoginUrlHandler:(deps: {
         await executeQuery(SQL`UPDATE users SET loginId = ${loginId} WHERE discord_id = ${req.body.discordId}`)
       }
 
-      res.status(201).json({ loginUrl: format({ protocol: req.protocol, host: req.get("host"), pathname: `/login/${loginId}` }) })
+      res.status(201).json({ loginId })
     } catch (err) {
       if(err instanceof ValidationError) {
         res.status(400).json({ error: err })
