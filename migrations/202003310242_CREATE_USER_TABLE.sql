@@ -1,3 +1,4 @@
-CREATE TABLE IF NOT EXISTS `USER` (
-  discord_id INTEGER PRIMARY KEY
+CREATE TABLE IF NOT EXISTS `users` (
+  discord_id INTEGER PRIMARY KEY,
+  current_login_id TEXT
 );
