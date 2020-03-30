@@ -2,12 +2,11 @@ import { defineSchema, ValidationError, assertValid } from "@japan-d2/schema"
 import { SQL, SQLStatement } from "sql-template-strings"
 import * as Express from "express";
 
-export const issueLoginUrlHandler:(deps: {
+export const issueAuthorizedTokenHandler:(deps: {
   executeQuery: Promise<(sql: string | SQLStatement) => Promise<any>>,
   generateRandomString: () => void
 }) => (req: Express.Request, res: Express.Response) => Promise<void> = (deps) => async (req, res) => {
   const executeQuery = await deps.executeQuery
-  const inputSchema = defineSchema().number("discordId")
   try {
     assertValid(req.body, inputSchema)
     const loginId = deps.generateRandomString()
