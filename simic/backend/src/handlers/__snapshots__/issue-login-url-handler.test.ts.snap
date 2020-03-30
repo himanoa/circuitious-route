@@ -1,10 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`issueLoginUrlHandler when db error should be error 1`] = `Array []`;
+
+exports[`issueLoginUrlHandler when db error should be error 2`] = `
+Object {
+  "error": [Error: DB],
+}
+`;
+
 exports[`issueLoginUrlHandler when exist discordId should be valid 1`] = `
 Array [
   "SELECT * FROM USERS WHERE discord_id = ?",
   "UPDATE users SET loginId = ? WHERE discord_id = ?",
 ]
+`;
+
+exports[`issueLoginUrlHandler when invalid body should be error 1`] = `Array []`;
+
+exports[`issueLoginUrlHandler when invalid body should be error 2`] = `
+Object {
+  "error": ValidationError {
+    "argument": "discordId",
+    "instance": Object {
+      "invalid": 123123123,
+    },
+    "message": "requires property \\"discordId\\"",
+    "name": "required",
+    "property": "instance",
+    "schema": Object {
+      "properties": Object {
+        "discordId": Object {
+          "type": "number",
+        },
+      },
+      "required": Array [
+        "discordId",
+      ],
+      "type": "object",
+    },
+    "stack": "instance requires property \\"discordId\\"",
+  },
+}
 `;
 
 exports[`issueLoginUrlHandler when not exist discordId should be valid 1`] = `

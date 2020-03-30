@@ -1,3 +1,4 @@
+import { randomBytes }  from "crypto"
 import * as Express from "express";
 import * as sqlite from "sqlite"
 import {issueLoginUrlHandler} from "./handlers/issue-login-url-handler"
@@ -18,6 +19,7 @@ function runAsyncWrapper (callback: (req: Express.Request, res: Express.Response
 
 app.post("/", runAsyncWrapper(issueLoginUrlHandler(
   {
-    executeQuery: db.then(db => new Promise((resolve) => resolve(db.get)))
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
+    generateRandomString: () => randomBytes(16).toString("hex")
   }
 )))
