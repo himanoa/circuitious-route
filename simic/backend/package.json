@@ -13,6 +13,7 @@
     "@types/mock-req-res": "^1.1.0",
     "@types/sinon": "^7.5.2",
     "jest": "^25.2.3",
+    "jest-express": "^1.11.3",
     "mock-req-res": "^1.1.4",
     "nodemon": "^2.0.2",
     "prettier": "^2.0.2",

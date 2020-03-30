@@ -16,11 +16,11 @@ describe("issueLoginUrlHandler", () => {
       })
     }
     
-    it("should be valid", () => {
+    it("should be valid", async () => {
       const request = mockRequest({ body: { discordId: 2012123123123 } })
       const response = mockResponse()
-      issueLoginUrlHandler(dummyDeps)(request, response)
-      expect(response.status.getCall(0).args).toEqual([200])
+      await issueLoginUrlHandler(dummyDeps)(request, response)
+      expect(() => response.json).toBeCalled()
     })
 })
 })
