@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@japan-d2/schema": "^0.0.17",
+    "@types/json-schema": "^7.0.4",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "sql-template-strings": "^2.2.2",
