@@ -8,7 +8,7 @@ export const issueLoginUrlHandler:(deps: {
   executeQuery: Promise<(sql: string | SQLStatement) => Promise<any>>
 }) => (req: Express.Request, res: Express.Response) => Promise<void> = (deps) => async (req, res) => {
   const executeQuery = await deps.executeQuery
-  const inputSchema = defineSchema().string("discordId")
+  const inputSchema = defineSchema().number("discordId")
   if(validate(req.body, inputSchema)) {
     const loginId = randomBytes(16).toString("hex")
     try {

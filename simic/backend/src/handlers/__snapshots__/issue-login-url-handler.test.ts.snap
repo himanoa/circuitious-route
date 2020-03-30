@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`issueLoginUrlHandler when not exist discordId should be valid 1`] = `null`;
+exports[`issueLoginUrlHandler when exist discordId should be valid 1`] = `
+Array [
+  "SELECT * FROM USERS WHERE discord_id = ?",
+  "UPDATE users SET loginId = ? WHERE discord_id = ?",
+]
+`;
+
+exports[`issueLoginUrlHandler when not exist discordId should be valid 1`] = `
+Array [
+  "SELECT * FROM USERS WHERE discord_id = ?",
+  "INSERT INTO users (discord_id, current_login_id), VALUES (?, ?)",
+]
+`;
