@@ -1,2 +1,3 @@
 setup:
-	sqlite3 data/database.sqlite3
+	touch data/database.sqlite3
+
