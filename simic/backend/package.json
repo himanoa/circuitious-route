@@ -18,6 +18,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@japan-d2/schema": "^0.0.17",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1"
   }
