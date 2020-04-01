@@ -15,6 +15,7 @@ export const issueLoginUrlHandler:(deps: {
         await executeQuery(SQL`INSERT INTO users (discord_id, current_login_id), VALUES (${req.body.discordId}, ${loginId})`)
       } else {
         await executeQuery(SQL`UPDATE users SET loginId = ${loginId} WHERE discord_id = ${req.body.discordId}`)
+        await executeQuery(SQL`DELETE refresh_tokens WHERE discord_id = ${req.body.discordId}`);
       }
 
       res.status(201).json({ loginId })

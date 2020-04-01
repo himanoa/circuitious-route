@@ -12,6 +12,7 @@ exports[`issueLoginUrlHandler when exist discordId should be valid 1`] = `
 Array [
   "SELECT * FROM USERS WHERE discord_id = ?",
   "UPDATE users SET loginId = ? WHERE discord_id = ?",
+  "DELETE refresh_tokens WHERE discord_id = ?",
 ]
 `;
 
