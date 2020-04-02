@@ -1,6 +1,6 @@
 import  * as Express from "express";
 import { SQL, SQLStatement } from "sql-template-strings"
-import { TokenNotFoundError } from "./TokenNotFoundError"
+import { TokenNotFoundError} from "../error"
 
 export const verifyHandler = (
   deps: {
@@ -17,8 +17,12 @@ export const verifyHandler = (
     }
     const [,token] = tokenWithType.split(" ")
     const { discordId } = deps.verify(token)
-    // await executeQuery(SQL`SELECT * `)
+    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)}`)
+    res.status(200).json({
+      profiles,
+      discordId
+    })
   } catch {
-
+    res.status(401).json({})
   }
 }
