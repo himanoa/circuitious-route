@@ -6,7 +6,7 @@ export const verifyHandler = (
   deps: {
     executeQuery: Promise<(sql: string | SQLStatement) => Promise<any>>,
     generateRandomString: () => void,
-    verify: (token: string) => { discordId: string }
+    verify: (token: string) => {discordId: string}
   }
 ) => async (req: Express.Request, res: Express.Response) => {
   try {
