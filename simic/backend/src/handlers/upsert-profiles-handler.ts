@@ -3,10 +3,9 @@ import { defineSchema, ValidationError, assertValid } from "@japan-d2/schema"
 import { SQL, SQLStatement } from "sql-template-strings"
 import { TokenNotFoundError} from "../error"
 
-export const verifyHandler = (
+export const upsertProfileHandler = (
   deps: {
     executeQuery: Promise<(sql: string | SQLStatement) => Promise<any>>,
-    generateRandomString: () => void,
     verify: (token: string) => {discordId: string}
   }
 ) => async (req: Express.Request, res: Express.Response) => {
@@ -38,10 +37,10 @@ export const verifyHandler = (
       discordId
     })
   } catch(err) {
-    if(err instanceof TokenNotFoundError) {
-      res.status(401).json({})
-    } else if (err instanceof ValidationError) {
+    if(err instanceof ValidationError) {
       res.status(400).json({error: err})
+    } else {
+      res.status(401).json({})
     }
   }
 }

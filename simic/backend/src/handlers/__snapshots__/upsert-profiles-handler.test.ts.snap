@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`upsertProfileHandler when verify failed should be failed 1`] = `Array []`;
+
+exports[`upsertProfileHandler when verify failed should be failed 2`] = `Object {}`;
+
+exports[`upsertProfileHandler when verify failed should be failed 3`] = `Object {}`;
+
+exports[`upsertProfileHandler when verify successful should be success 1`] = `
+Array [
+  "BEGIN TRANSACTION",
+  "DELETE * FROM profiles WHERE profiles.discord_id = ?",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?)",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?)",
+  "COMMIT",
+  "SELECT * FROM user WHERE profiles.discord_id = ?",
+]
+`;
+
+exports[`upsertProfileHandler when verify successful should be success 2`] = `
+Object {
+  "discordId": "12123123",
+  "profiles": Array [
+    Object {
+      "discord_id": "123123",
+      "stream_key": "XXXX",
+    },
+    Object {
+      "discord_id": "123123",
+      "stream_key": "YYYY",
+    },
+  ],
+}
+`;
+
+exports[`upsertProfileHandler when verify successful should be success 3`] = `
+Object {
+  "discordId": "12123123",
+  "profiles": Array [
+    Object {
+      "discord_id": "123123",
+      "stream_key": "XXXX",
+    },
+    Object {
+      "discord_id": "123123",
+      "stream_key": "YYYY",
+    },
+  ],
+}
+`;
