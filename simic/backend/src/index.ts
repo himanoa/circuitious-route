@@ -3,6 +3,7 @@ import * as Express from "express";
 import * as sqlite from "sqlite"
 import {issueLoginUrlHandler} from "./handlers/issue-login-url-handler"
 import { issueAuthorizedTokenHandler } from "./handlers/issue-authorized-token-handler"
+import { upsertProfileHandler } from "./handlers/upsert-profiles-handler"
 import { verifyHandler } from "./handlers/verify-handler"
 import jwt from "jsonwebtoken"
 
@@ -39,6 +40,13 @@ app.get("/verify", runAsyncWrapper(verifyHandler(
   {
     executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
     generateRandomString: () => randomBytes(16).toString("hex"),
+    verify: (token) => jwt.verify(token, null as any, { algorithms: ["HS256"]}) as any
+  }
+)))
+
+app.put("/upsert-profiles", runAsyncWrapper(upsertProfileHandler(
+  {
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
     verify: (token) => jwt.verify(token, null as any, { algorithms: ["HS256"]}) as any
   }
 )))
