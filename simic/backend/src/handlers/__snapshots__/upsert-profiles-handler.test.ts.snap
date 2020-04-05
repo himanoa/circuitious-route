@@ -8,12 +8,12 @@ exports[`upsertProfileHandler when verify failed should be failed 3`] = `Object 
 
 exports[`upsertProfileHandler when verify successful should be success 1`] = `
 Array [
-  "BEGIN TRANSACTION",
-  "DELETE * FROM profiles WHERE profiles.discord_id = ?",
-  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?)",
-  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?)",
-  "COMMIT",
-  "SELECT * FROM user WHERE profiles.discord_id = ?",
+  "BEGIN TRANSACTION;",
+  "DELETE * FROM profiles WHERE profiles.discord_id = ?;",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?);",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?);",
+  "COMMIT;",
+  "SELECT * FROM user WHERE profiles.discord_id = ?;",
 ]
 `;
 

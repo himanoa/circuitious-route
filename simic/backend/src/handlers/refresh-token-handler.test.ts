@@ -21,11 +21,14 @@ describe("refreshTokenHandler", () => {
 
     it("should be failed", async () => {
       const request = new Request.Request("https://example.com")
+      request.setBody({
+        refreshToken: "XXXXXX"
+      })
       request.setHeaders("Authorization", "Barer InvalidToken")
       const response = new Response.Response()
       await target(request as any, response as any)
       expect(executedQuery).toMatchSnapshot()
-      expect(response.status).toBeCalledWith(200)
+      expect(response.status).toBeCalledWith(201)
       expect(response.body).toMatchSnapshot()
     })
   })
@@ -38,6 +41,9 @@ describe("refreshTokenHandler", () => {
           executedQuery.push(sql)
           return Promise.resolve([1])
         }
+        if (/^SELECT \* FROM refresh_tokens/.test(sql.sql)) {
+          return Promise.resolve([])
+        }
         executedQuery.push(sql.sql)
         return Promise.resolve([1])
       }),
@@ -47,6 +53,9 @@ describe("refreshTokenHandler", () => {
 
     it("should be failed", async () => {
       const request = new Request.Request("https://example.com")
+      request.setBody({
+        refreshToken: "XXXXXX"
+      })
       request.setHeaders("Authorization", "Barer InvalidToken")
       const response = new Response.Response()
       await target(request as any, response as any)

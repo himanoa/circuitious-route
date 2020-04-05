@@ -37,7 +37,7 @@ export const refreshTokenHandler = (
     }
   } catch(err) {
     if(err instanceof ValidationError) {
-      res.status(400).json({error: err})
+      return res.status(400).json({error: err})
     }
     res.status(401).json({})
   }
