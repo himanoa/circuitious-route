@@ -5,7 +5,7 @@ import { TokenNotFoundError} from "../error"
 export const verifyHandler = (
   deps: {
     executeQuery: Promise<(sql: string | SQLStatement) => Promise<any>>,
-    generateRandomString: () => void,
+    generateRandomString: () => string,
     verify: (token: string) => {discordId: string}
   }
 ) => async (req: Express.Request, res: Express.Response) => {

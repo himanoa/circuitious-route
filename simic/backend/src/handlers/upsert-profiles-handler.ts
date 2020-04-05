@@ -22,16 +22,17 @@ export const upsertProfileHandler = (
     const [,token] = tokenWithType.split(" ")
     const { discordId } = deps.verify(token)
     try {
-      await executeQuery(SQL`BEGIN TRANSACTION`)
-      await executeQuery(SQL`DELETE * FROM profiles WHERE profiles.discord_id = ${discordId}`)
+      await executeQuery(SQL`BEGIN TRANSACTION;`)
+      await executeQuery(SQL`DELETE * FROM profiles WHERE profiles.discord_id = ${discordId};`)
       for ( const profile of req.body.profiles ) {
-        await executeQuery(SQL`INSERT INTO profiles (discord_id, stream_key) VALUES(${discordId}, ${profile.streamKey})`)
+        await executeQuery(SQL`INSERT INTO profiles (discord_id, stream_key) VALUES(${discordId}, ${profile.streamKey});`)
       }
-      await executeQuery(SQL`COMMIT`)
+      await executeQuery(SQL`COMMIT;`)
     } catch(err) {
-      await executeQuery(SQL`ROLLBACK`)
+      await executeQuery(SQL`ROLLBACK:`)
+      throw Error
     } 
-    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)}`)
+    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)};`)
     res.status(200).json({
       profiles,
       discordId

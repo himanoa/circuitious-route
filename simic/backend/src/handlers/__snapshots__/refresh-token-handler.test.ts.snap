@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`refreshTokenHandler when verify failed should be failed 1`] = `Array []`;
+
+exports[`refreshTokenHandler when verify failed should be failed 2`] = `Object {}`;
+
+exports[`refreshTokenHandler when verify successful should be failed 1`] = `Array []`;
