@@ -73,7 +73,6 @@ app.post("/refresh-token", runAsyncWrapper(refreshTokenHandler(
   }
 )))
 
-
 app.listen(process.env.PORT || 3000, () => {
   console.log("Simic backend app listening at localhost:3000")
 })
