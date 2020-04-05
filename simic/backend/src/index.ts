@@ -42,7 +42,7 @@ app.post("/login-url", runAsyncWrapper(issueLoginUrlHandler(
   }
 )))
 
-app.post("/authorize", runAsyncWrapper(issueAuthorizedTokenHandler(
+app.post("/:loginId/authorize", runAsyncWrapper(issueAuthorizedTokenHandler(
   {
     executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
     generateRandomString: () => randomBytes(16).toString("hex"),
