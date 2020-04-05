@@ -4,6 +4,7 @@ import * as sqlite from "sqlite"
 import {issueLoginUrlHandler} from "./handlers/issue-login-url-handler"
 import { issueAuthorizedTokenHandler } from "./handlers/issue-authorized-token-handler"
 import { upsertProfileHandler } from "./handlers/upsert-profiles-handler"
+import { refreshTokenHandler } from "./handlers/refresh-token-handler"
 import { verifyHandler } from "./handlers/verify-handler"
 import jwt from "jsonwebtoken"
 
@@ -48,5 +49,13 @@ app.put("/upsert-profiles", runAsyncWrapper(upsertProfileHandler(
   {
     executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
     verify: (token) => jwt.verify(token, null as any, { algorithms: ["HS256"]}) as any
+  }
+)))
+
+app.post("/refresh-token", runAsyncWrapper(refreshTokenHandler(
+  {
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.get))),
+    generateRandomString: () => randomBytes(16).toString("hex"),
+    sign: ({ discordId }) => jwt.sign({discordId}, null as any, { algorithm: "RS256", expiresIn: 60 * 60 })
   }
 )))

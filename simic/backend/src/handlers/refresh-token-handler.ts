@@ -31,14 +31,18 @@ export const refreshTokenHandler = (
         }),
         refreshToken: token.token
       })
+      return 
     } catch (err) {
       await executeQuery(SQL`ROLLBACK;`)
       res.status(500).json({})
+      return 
     }
   } catch(err) {
     if(err instanceof ValidationError) {
-      return res.status(400).json({error: err})
+      res.status(400).json({error: err})
+      return
     }
     res.status(401).json({})
+    return
   }
 }
