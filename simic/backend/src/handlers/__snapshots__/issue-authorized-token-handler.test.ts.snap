@@ -2,8 +2,8 @@
 
 exports[`issueAuthorizedTokenHandler when exist discordId when exist refreshToken should be valid 1`] = `
 Array [
+  "SELECT * FROM users WHERE current_login_id = ?;",
   "SELECT * FROM refresh_tokens WHERE discord_id = ? AND enabled = 1;",
-  "SELECT * FROM users WHERE discord_id = ?;",
 ]
 `;
 
@@ -11,8 +11,8 @@ exports[`issueAuthorizedTokenHandler when exist discordId when exist refreshToke
 
 exports[`issueAuthorizedTokenHandler when exist discordId when not exist refreshToken should be valid 1`] = `
 Array [
+  "SELECT * FROM users WHERE current_login_id = ?;",
   "SELECT * FROM refresh_tokens WHERE discord_id = ? AND enabled = 1;",
-  "SELECT * FROM users WHERE discord_id = ?;",
   "INSERT INTO refresh_tokens (discord_id, token, activated, created_at) VALUES (?, ?, 1, strftime('%s', 'now'));",
 ]
 `;
@@ -32,45 +32,6 @@ Object {
 }
 `;
 
-exports[`when invalid body should be error 1`] = `Array []`;
+exports[`when invalid params should be error 1`] = `Array []`;
 
-exports[`when invalid body should be error 2`] = `
-Object {
-  "error": ValidationError {
-    "argument": "discordId",
-    "instance": Object {
-      "invalid": 123123123,
-    },
-    "message": "requires property \\"discordId\\"",
-    "name": "required",
-    "property": "instance",
-    "schema": Object {
-      "properties": Object {
-        "discordId": Object {
-          "type": "number",
-        },
-      },
-      "required": Array [
-        "discordId",
-      ],
-      "type": "object",
-    },
-    "stack": "instance requires property \\"discordId\\"",
-  },
-}
-`;
-
-exports[`when not exist discordId should be valid 1`] = `
-Array [
-  "SELECT * FROM refresh_tokens WHERE discord_id = ? AND enabled = 1;",
-  "SELECT * FROM users WHERE discord_id = ?;",
-  "INSERT INTO refresh_tokens (discord_id, token, activated, created_at) VALUES (?, ?, 1, strftime('%s', 'now'));",
-]
-`;
-
-exports[`when not exist discordId should be valid 2`] = `
-Object {
-  "accessToken": "signed strings",
-  "refreshToken": "foobar",
-}
-`;
+exports[`when invalid params should be error 2`] = `Object {}`;

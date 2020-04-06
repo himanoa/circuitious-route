@@ -21,7 +21,7 @@ describe("issueLoginUrlHandler", () => {
     it("should be valid", async () => {
       const request = new Request.Request("https://example.com")
       request.setBody({
-        discordId: 123123123
+        discordId: "123123123"
       })
       const response = new Response.Response()
       await issueLoginUrlHandler(dummyDeps)(request as any, response as any)
@@ -47,7 +47,7 @@ describe("issueLoginUrlHandler", () => {
     it("should be valid", async () => {
       const request = new Request.Request("https://example.com")
       request.setBody({
-        discordId: 123123123
+        discordId: "123123123"
       })
       const response = new Response.Response()
       await issueLoginUrlHandler(dummyDeps)(request as any, response as any)
@@ -96,7 +96,7 @@ describe("issueLoginUrlHandler", () => {
     it("should be error", async () => {
       const request = new Request.Request("https://example.com")
       request.setBody({
-        discordId: 123123123
+        discordId: "123123123"
       })
       const response = new Response.Response()
       await issueLoginUrlHandler(dummyDeps)(request as any, response as any)

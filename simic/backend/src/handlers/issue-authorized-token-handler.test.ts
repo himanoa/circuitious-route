@@ -22,8 +22,8 @@ describe("issueAuthorizedTokenHandler", () => {
       
       it("should be valid", async () => {
         const request = new Request.Request("https://example.com")
-        request.setBody({
-          discordId: 123123123
+        request.setParams({
+          loginId: "XXXXX"
         })
         const response = new Response.Response()
         await issueAuthorizedTokenHandler(dummyDeps)(request as any, response as any)
@@ -53,8 +53,8 @@ describe("issueAuthorizedTokenHandler", () => {
       
       it("should be valid", async () => {
         const request = new Request.Request("https://example.com")
-        request.setBody({
-          discordId: 123123123
+        request.setParams({
+          loginId: "XXXXX"
         })
         const response = new Response.Response()
         await issueAuthorizedTokenHandler(dummyDeps)(request as any, response as any)
@@ -65,35 +65,8 @@ describe("issueAuthorizedTokenHandler", () => {
     })
     })
   })
-  describe("when not exist discordId", () => {
-    const executedQuery: string[] = []
-    const dummyDeps = {
-      executeQuery: Promise.resolve((sql: SQLStatement | string) => {
-        if(typeof sql === "string") {
-          executedQuery.push(sql)
-          return Promise.resolve([])
-        }
-        executedQuery.push(sql.sql)
-        return Promise.resolve([])
-      }),
-      generateRandomString: () => "foobar",
-      sign: () => "signed strings"
-    }
-    
-    it("should be valid", async () => {
-      const request = new Request.Request("https://example.com")
-      request.setBody({
-        discordId: 123123123
-      })
-      const response = new Response.Response()
-      await issueAuthorizedTokenHandler(dummyDeps)(request as any, response as any)
-      expect(executedQuery).toMatchSnapshot()
-      expect(response.status).toBeCalledWith(201)
-      expect(response.body).toMatchSnapshot() 
-    })
-  })
 
-  describe("when invalid body", () => {
+  describe("when invalid params", () => {
     const executedQuery: string[] = []
     const dummyDeps = {
       executeQuery: Promise.resolve((sql: SQLStatement | string) => {
@@ -110,8 +83,8 @@ describe("issueAuthorizedTokenHandler", () => {
     
     it("should be error", async () => {
       const request = new Request.Request("https://example.com")
-      request.setBody({
-        invalid: 123123123
+      request.setParams({
+        invalid: "123123123"
       })
       const response = new Response.Response()
       await issueAuthorizedTokenHandler(dummyDeps)(request as any, response as any)
@@ -124,7 +97,7 @@ describe("issueAuthorizedTokenHandler", () => {
   describe("when db error", () => {
     const executedQuery: string[] = []
     const dummyDeps = {
-      executeQuery: Promise.resolve(() => {
+      executeQuery: Promise.resolve((sql: SQLStatement | string) => {
         throw Error("DB")
       }),
       generateRandomString: () => "foobar",
@@ -133,10 +106,10 @@ describe("issueAuthorizedTokenHandler", () => {
     
     it("should be error", async () => {
       const request = new Request.Request("https://example.com")
-      request.setBody({
-        discordId: 123123123
-      })
       const response = new Response.Response()
+      request.setParams({
+        loginId: "XXXXX"
+      })
       await issueAuthorizedTokenHandler(dummyDeps)(request as any, response as any)
       expect(executedQuery).toMatchSnapshot()
       expect(response.status).toBeCalledWith(500)
