@@ -13,6 +13,7 @@
     "@types/jsonwebtoken": "^8.3.8",
     "@types/meow": "^5.0.0",
     "@types/mock-req-res": "^1.1.0",
+    "@types/morgan": "^1.9.0",
     "@types/node-fetch": "^2.5.5",
     "@types/sinon": "^7.5.2",
     "jest": "^25.2.3",
