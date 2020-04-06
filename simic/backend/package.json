@@ -32,6 +32,7 @@
     "@types/json-schema": "^7.0.4",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^3.0.6"
   }
