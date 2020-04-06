@@ -1,5 +1,5 @@
 import meow from "meow"
-import "node-fetch"
+import fetch from "node-fetch"
 import  assert from "assert"
 
 
@@ -23,7 +23,7 @@ const verifyEndPoint = `${cli.input[0]}/verify`
 const upsertProfilsEndPoint = `${cli.input[0]}/upsert-profiles`
 const refreshTokenEndPoint= `${cli.input[0]}/refresh-token`
 
-async function story() {
+async function successStory() {
   const loginResponse = await fetch(loginUrlEndPoint, {method: "post", body: JSON.stringify({discordId: "121212121212"})})
   assert.strictEqual(loginResponse.ok, true)
   const { loginId }  = await loginResponse.json()
@@ -34,4 +34,4 @@ async function story() {
   assert.strictEqual(verifyResponse.ok, true)
 }
 
-story()
+successStory()

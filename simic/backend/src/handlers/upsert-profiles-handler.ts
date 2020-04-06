@@ -15,7 +15,7 @@ export const upsertProfileHandler = (
     const executeQuery = await deps.executeQuery
     const tokenWithType = req.get("Authorization")
     if(!tokenWithType) {
-      throw new TokenNotFoundError()
+      throw new TokenNotFoundError("Token is not found")
     }
 
     assertValid(req.body, schema)

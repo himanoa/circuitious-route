@@ -13,7 +13,7 @@ export const verifyHandler = (
     const executeQuery = await deps.executeQuery
     const tokenWithType = req.get("Authorization")
     if(!tokenWithType) {
-      throw new TokenNotFoundError()
+      throw new TokenNotFoundError("Token is not found")
     }
     const [,token] = tokenWithType.split(" ")
     const { discordId } = deps.verify(token)
