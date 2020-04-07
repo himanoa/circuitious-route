@@ -34,5 +34,8 @@
     "jsonwebtoken": "^8.5.1",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^3.0.6"
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
