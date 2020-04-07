@@ -10,13 +10,12 @@ export const issueLoginUrlHandler:(deps: {
   const inputSchema = defineSchema().string("discordId")
   try {
     assertValid(req.body, inputSchema)
-    console.dir(req.body)
     const loginId = deps.generateRandomString()
     if ((await executeQuery(SQL`SELECT * FROM USERS WHERE discord_id = ${req.body.discordId};`)).length === 0) {
-      await executeQuery(SQL`INSERT INTO users (discord_id, current_login_id), VALUES (${req.body.discordId}, ${loginId});`)
+      await executeQuery(SQL`INSERT INTO users (discord_id, current_login_id) VALUES (${req.body.discordId}, ${loginId});`)
     } else {
       await executeQuery(SQL`UPDATE users SET current_login_id = ${loginId} WHERE discord_id = ${req.body.discordId};`)
-      await executeQuery(SQL`DELETE refresh_tokens WHERE discord_id = ${req.body.discordId}:`);
+      await executeQuery(SQL`DELETE FROM refresh_tokens WHERE discord_id = ${req.body.discordId};`);
     }
 
     res.status(201).json({ loginId })

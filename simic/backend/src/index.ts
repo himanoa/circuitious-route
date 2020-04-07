@@ -40,14 +40,14 @@ function runAsyncWrapper (callback: (req: Express.Request, res: Express.Response
 
 app.post("/login-url", runAsyncWrapper(issueLoginUrlHandler(
   {
-    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all))),
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all.bind(db)))),
     generateRandomString: () => randomBytes(16).toString("hex")
   }
 )))
 
 app.post("/:loginId/authorize", runAsyncWrapper(issueAuthorizedTokenHandler(
   {
-    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all))),
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all.bind(db)))),
     generateRandomString: () => randomBytes(16).toString("hex"),
     sign: ({ discordId }) => jwt.sign({discordId}, privateKey, { algorithm: "RS256", expiresIn: 60 * 60 })
   }
@@ -55,7 +55,7 @@ app.post("/:loginId/authorize", runAsyncWrapper(issueAuthorizedTokenHandler(
 
 app.get("/verify", runAsyncWrapper(verifyHandler(
   {
-    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all))),
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all.bind(db)))),
     generateRandomString: () => randomBytes(16).toString("hex"),
     verify: (token) => jwt.verify(token, publicKey, { algorithms: ["HS256"]}) as any
   }
@@ -70,7 +70,7 @@ app.put("/upsert-profiles", runAsyncWrapper(upsertProfileHandler(
 
 app.post("/refresh-token", runAsyncWrapper(refreshTokenHandler(
   {
-    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all))),
+    executeQuery: db.then(db => new Promise((resolve) => resolve(db.all.bind(db)))),
     generateRandomString: () => randomBytes(16).toString("hex"),
     sign: ({ discordId }) => jwt.sign({discordId}, privateKey, { algorithm: "RS256", expiresIn: 60 * 60 })
   }

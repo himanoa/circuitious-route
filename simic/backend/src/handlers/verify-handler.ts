@@ -17,7 +17,7 @@ export const verifyHandler = (
     }
     const [,token] = tokenWithType.split(" ")
     const { discordId } = deps.verify(token)
-    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)}`)
+    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)};`)
     res.status(200).json({
       profiles,
       discordId
