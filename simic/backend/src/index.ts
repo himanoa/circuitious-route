@@ -57,14 +57,14 @@ app.get("/verify", runAsyncWrapper(verifyHandler(
   {
     executeQuery: db.then(db => new Promise((resolve) => resolve(db.all.bind(db)))),
     generateRandomString: () => randomBytes(16).toString("hex"),
-    verify: (token) => jwt.verify(token, publicKey, { algorithms: ["HS256"]}) as any
+    verify: (token) => jwt.verify(token, publicKey, { algorithms: ["RS256"]}) as any
   }
 )))
 
 app.put("/upsert-profiles", runAsyncWrapper(upsertProfileHandler(
   {
     executeQuery: db.then(db => new Promise((resolve) => resolve(db.all))),
-    verify: (token) => jwt.verify(token, publicKey, { algorithms: ["HS256"]}) as any
+    verify: (token) => jwt.verify(token, publicKey, { algorithms: ["RS256"]}) as any
   }
 )))
 
