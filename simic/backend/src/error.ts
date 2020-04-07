@@ -1,35 +1,12 @@
-export class UserNotFoundError extends Error {
-  constructor(params: any) {
-    super(params)
-
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, UserNotFoundError)
-    }
-
-    this.name = 'UserNotFoundError'
+export class SimicBackendError extends Error {
+  constructor(...params: any[]) {
+    super(...params)
+    this.name = this.constructor.name
   }
 }
 
-export class TokenNotFoundError extends Error {
-  constructor(params: any) {
-    super(params)
+export class UserNotFoundError extends SimicBackendError {}
 
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, TokenNotFoundError)
-    }
+export class TokenNotFoundError extends SimicBackendError {}
 
-    this.name = 'TokenNotFoundError'
-  }
-}
-
-export class LoginIdNotFoundError extends Error {
-  constructor(params: any) {
-    super(params)
-
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, LoginIdNotFoundError)
-    }
-
-    this.name = 'LoginIdNotFoundError'
-  }
-}
+export class LoginIdNotFoundError extends SimicBackendError {}
