@@ -20,19 +20,21 @@ export const upsertProfileHandler = (
 
     assertValid(req.body, schema)
     const [,token] = tokenWithType.split(" ")
-    const { discordId } = deps.verify(token)
+    const {discordId} = deps.verify(token)
+    if(discordId === undefined) {
+      throw new TokenNotFoundError("Token is not found")
+    }
     try {
       await executeQuery(SQL`BEGIN TRANSACTION;`)
-      await executeQuery(SQL`DELETE * FROM profiles WHERE profiles.discord_id = ${discordId};`)
+      await executeQuery(SQL`DELETE FROM profiles WHERE profiles.discord_id = ${discordId};`)
       for ( const profile of req.body.profiles ) {
-        await executeQuery(SQL`INSERT INTO profiles (discord_id, stream_key) VALUES(${discordId}, ${profile.streamKey});`)
+        await executeQuery(SQL`INSERT INTO profiles (discord_id, stream_key) VALUES (${discordId}, ${profile.streamKey});`)
       }
       await executeQuery(SQL`COMMIT;`)
     } catch(err) {
-      await executeQuery(SQL`ROLLBACK:`)
-      throw Error
+      await executeQuery(SQL`ROLLBACK;`)
     } 
-    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)};`)
+    const profiles = await executeQuery(SQL`SELECT * FROM profiles WHERE discord_id = ${discordId};`)
     res.status(200).json({
       profiles,
       discordId
@@ -41,7 +43,7 @@ export const upsertProfileHandler = (
     if(err instanceof ValidationError) {
       res.status(400).json({error: err})
     } else {
-      res.status(401).json({})
+      res.status(401).json({error: err})
     }
   }
 }
