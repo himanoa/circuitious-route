@@ -36,5 +36,8 @@
     "morgan": "^1.10.0",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^3.0.6"
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
