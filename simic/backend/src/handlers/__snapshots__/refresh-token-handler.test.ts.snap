@@ -2,20 +2,24 @@
 
 exports[`refreshTokenHandler when verify failed should be failed 1`] = `Array []`;
 
-exports[`refreshTokenHandler when verify failed should be failed 2`] = `Object {}`;
+exports[`refreshTokenHandler when verify failed should be failed 2`] = `
+Object {
+  "error": [TokenNotFoundError: Token not found],
+}
+`;
 
 exports[`refreshTokenHandler when verify successful should be failed 1`] = `
 Array [
-  "SELECT * FROM refresh_tokens WHERE token = ? AND activated = true AND datetime('now', '-6 months') < refresh_tokens.created_at;",
+  "SELECT * FROM refresh_tokens WHERE token = ? AND activated = true AND datetime('now', '-6 months') > created_at;",
   "BEGIN TRANSACTION;",
-  "UPDATE refresh_tokens SET created_at = datetime('now'), token = ? WHERE token = ? AND activated = true AND datetime('now', '-6 months') < refresh_tokens.created_at;",
+  "UPDATE refresh_tokens SET created_at = datetime('now'), token = ? WHERE token = ? AND activated = true AND datetime('now', '-6 months') > created_at;",
   "COMMIT;",
 ]
 `;
 
 exports[`refreshTokenHandler when verify successful should be failed 2`] = `
 Object {
+  "accessToken": "signed strings",
   "refreshToken": undefined,
-  "token": "signed strings",
 }
 `;

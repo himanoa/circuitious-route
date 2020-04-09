@@ -3,7 +3,7 @@
 exports[`issueAuthorizedTokenHandler when exist discordId when exist refreshToken should be valid 1`] = `
 Array [
   "SELECT * FROM users WHERE current_login_id = ?;",
-  "SELECT * FROM refresh_tokens WHERE discord_id = ? AND enabled = 1;",
+  "SELECT * FROM refresh_tokens WHERE discord_id = ? AND activated = 1;",
 ]
 `;
 
@@ -12,7 +12,7 @@ exports[`issueAuthorizedTokenHandler when exist discordId when exist refreshToke
 exports[`issueAuthorizedTokenHandler when exist discordId when not exist refreshToken should be valid 1`] = `
 Array [
   "SELECT * FROM users WHERE current_login_id = ?;",
-  "SELECT * FROM refresh_tokens WHERE discord_id = ? AND enabled = 1;",
+  "SELECT * FROM refresh_tokens WHERE discord_id = ? AND activated = 1;",
   "INSERT INTO refresh_tokens (discord_id, token, activated, created_at) VALUES (?, ?, 1, strftime('%s', 'now'));",
 ]
 `;

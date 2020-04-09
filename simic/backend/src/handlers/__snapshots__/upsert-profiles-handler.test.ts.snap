@@ -2,18 +2,26 @@
 
 exports[`upsertProfileHandler when verify failed should be failed 1`] = `Array []`;
 
-exports[`upsertProfileHandler when verify failed should be failed 2`] = `Object {}`;
+exports[`upsertProfileHandler when verify failed should be failed 2`] = `
+Object {
+  "error": [Error: doo],
+}
+`;
 
-exports[`upsertProfileHandler when verify failed should be failed 3`] = `Object {}`;
+exports[`upsertProfileHandler when verify failed should be failed 3`] = `
+Object {
+  "error": [Error: doo],
+}
+`;
 
 exports[`upsertProfileHandler when verify successful should be success 1`] = `
 Array [
   "BEGIN TRANSACTION;",
-  "DELETE * FROM profiles WHERE profiles.discord_id = ?;",
-  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?);",
-  "INSERT INTO profiles (discord_id, stream_key) VALUES(?, ?);",
+  "DELETE FROM profiles WHERE profiles.discord_id = ?;",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES (?, ?);",
+  "INSERT INTO profiles (discord_id, stream_key) VALUES (?, ?);",
   "COMMIT;",
-  "SELECT * FROM user WHERE profiles.discord_id = ?;",
+  "SELECT * FROM profiles WHERE discord_id = ?;",
 ]
 `;
 
