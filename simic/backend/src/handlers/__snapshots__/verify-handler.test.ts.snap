@@ -2,11 +2,15 @@
 
 exports[`verifyHandler when verify failed should be failed 1`] = `Array []`;
 
-exports[`verifyHandler when verify failed should be failed 2`] = `Object {}`;
+exports[`verifyHandler when verify failed should be failed 2`] = `
+Object {
+  "error": [Error: doo],
+}
+`;
 
 exports[`verifyHandler when verify successful should be failed 1`] = `
 Array [
-  "SELECT * FROM user WHERE profiles.discord_id = ?",
+  "SELECT * FROM profiles WHERE discord_id = ?;",
 ]
 `;
 

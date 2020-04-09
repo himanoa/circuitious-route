@@ -13,16 +13,16 @@ export const verifyHandler = (
     const executeQuery = await deps.executeQuery
     const tokenWithType = req.get("Authorization")
     if(!tokenWithType) {
-      throw new TokenNotFoundError()
+      throw new TokenNotFoundError("Token is not found")
     }
     const [,token] = tokenWithType.split(" ")
     const { discordId } = deps.verify(token)
-    const profiles = await executeQuery(SQL`SELECT * FROM user WHERE profiles.discord_id = ${parseInt(discordId, 10)}`)
+    const profiles = await executeQuery(SQL`SELECT * FROM profiles WHERE discord_id = ${discordId};`)
     res.status(200).json({
       profiles,
       discordId
     })
-  } catch {
-    res.status(401).json({})
+  } catch(err) {
+    res.status(401).json({error: err})
   }
 }

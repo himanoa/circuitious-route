@@ -10,9 +10,9 @@ Object {
 
 exports[`issueLoginUrlHandler when exist discordId should be valid 1`] = `
 Array [
-  "SELECT * FROM USERS WHERE discord_id = ?",
-  "UPDATE users SET current_login_id = ? WHERE discord_id = ?",
-  "DELETE refresh_tokens WHERE discord_id = ?",
+  "SELECT * FROM USERS WHERE discord_id = ?;",
+  "UPDATE users SET current_login_id = ? WHERE discord_id = ?;",
+  "DELETE FROM refresh_tokens WHERE discord_id = ?;",
 ]
 `;
 
@@ -46,7 +46,7 @@ Object {
 
 exports[`issueLoginUrlHandler when not exist discordId should be valid 1`] = `
 Array [
-  "SELECT * FROM USERS WHERE discord_id = ?",
-  "INSERT INTO users (discord_id, current_login_id), VALUES (?, ?)",
+  "SELECT * FROM USERS WHERE discord_id = ?;",
+  "INSERT INTO users (discord_id, current_login_id) VALUES (?, ?);",
 ]
 `;

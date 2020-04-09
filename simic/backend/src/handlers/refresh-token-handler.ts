@@ -15,19 +15,19 @@ export const refreshTokenHandler = (
   try {
     assertValid(req.body, schema)
     const executeQuery = await deps.executeQuery
-    const [token] = await executeQuery(SQL`SELECT * FROM refresh_tokens WHERE token = ${req.body.refreshToken} AND activated = true AND datetime('now', '-6 months') < refresh_tokens.created_at;`)
+    const [token] = await executeQuery(SQL`SELECT * FROM refresh_tokens WHERE token = ${req.body.refreshToken} AND activated = true AND datetime('now', '-6 months') > created_at;`)
     if(!token) {
-      throw TokenNotFoundError
+      throw new TokenNotFoundError("Token not found")
     }
 
     try {
       const newToken = deps.generateRandomString()
       await executeQuery(SQL`BEGIN TRANSACTION;`)
-      await executeQuery(SQL`UPDATE refresh_tokens SET created_at = datetime('now'), token = ${newToken} WHERE token = ${req.body.refreshToken} AND activated = true AND datetime('now', '-6 months') < refresh_tokens.created_at;`)
+      await executeQuery(SQL`UPDATE refresh_tokens SET created_at = datetime('now'), token = ${newToken} WHERE token = ${req.body.refreshToken} AND activated = true AND datetime('now', '-6 months') > created_at;`)
       await executeQuery(SQL`COMMIT;`)
       res.status(201).json( {
-        token: deps.sign({
-          discordId: token.discordId
+        accessToken: deps.sign({
+          discordId: token.discord_id
         }),
         refreshToken: token.token
       })
@@ -42,7 +42,11 @@ export const refreshTokenHandler = (
       res.status(400).json({error: err})
       return
     }
-    res.status(401).json({})
+    if (err instanceof TokenNotFoundError) {
+      res.status(401).json({error: err})
+      return
+    }
+    res.status(500).json({error: err})
     return
   }
 }

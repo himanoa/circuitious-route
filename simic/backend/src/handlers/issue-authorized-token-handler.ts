@@ -18,7 +18,7 @@ export const issueAuthorizedTokenHandler:(deps: {
     if(!user) {
       throw new UserNotFoundError(`User is not found`)
     }
-    const refreshToken = await executeQuery(SQL`SELECT * FROM refresh_tokens WHERE discord_id = ${user.discord_id} AND enabled = 1;`)
+    const refreshToken = await executeQuery(SQL`SELECT * FROM refresh_tokens WHERE discord_id = ${user.discord_id} AND activated = 1;`)
 
     if(refreshToken.length === 0) {
       const refreshToken = deps.generateRandomString()
