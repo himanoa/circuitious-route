@@ -1,7 +1,7 @@
 export class SimicBackendError extends Error {
   constructor(...params: any[]) {
-    super(...params)
-    this.name = this.constructor.name
+    super(...params);
+    this.name = this.constructor.name;
   }
 }
 

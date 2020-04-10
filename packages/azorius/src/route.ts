@@ -1,6 +1,6 @@
-import { Handler } from "./handler"
+import { Handler } from "./handler";
 
 export type Route = {
-  matcher: RegExp,
-  handler: Handler
-}
+  matcher: RegExp;
+  handler: Handler;
+};
