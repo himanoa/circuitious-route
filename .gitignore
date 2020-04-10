@@ -1,3 +1,4 @@
 node_modules
 data
 .envrc
+yarn-error.log
