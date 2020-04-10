@@ -6,6 +6,9 @@
   "author": "himanoa <matsunoappy@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "prettier": "prettier --write ."
+  },
   "workspaces": [
     "packages/azorius",
     "packages/simic/backend",
