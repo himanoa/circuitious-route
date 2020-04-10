@@ -1,0 +1,10 @@
+{
+  "name": "circuitous-route",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:himanoa/circuitious-route.git",
+  "author": "himanoa <matsunoappy@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": ["packages/azorius", "packages/simic/backend", "packages/simic/frontend"]
+}
