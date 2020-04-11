@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { SimicApiClient } from "../src/api-client"
 import {
   Button,
   ButtonGroup,
@@ -7,12 +8,13 @@ import {
   FormControl,
   TextField,
   Typography,
+  CircularProgress,
   makeStyles,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    height: "100%"
   },
   commentPaper: {
     padding: theme.spacing(2),
@@ -25,10 +27,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Index: React.FC = () => {
+  console.dir(process.env.APP_ENDPOINT)
   const classes = useStyles();
+  const [ pageLoading, setPageLoading ] = useState(true)
   const [streamKey, setStreamKey] = useState("")
   const handleStreamKeyInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setStreamKey(e.target.value), [])
+  const api = new SimicApiClient(process.env.APP_ENDPOINT, localStorage.getItem("accessToken"), localStorage.getItem("refreshToken"))
 
+  useEffect(() => {
+  }, [])
+
+  if(pageLoading) {
+    return (
+      <div>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+        >
+          <CircularProgress />
+        </Grid>
+      </div>
+    )
+  }
   return (
     <div className={classes.root}>
       <Grid

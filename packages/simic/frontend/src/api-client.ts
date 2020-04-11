@@ -56,7 +56,7 @@ export class SimicApiClient {
     }
   }
 
-  async refresh(): Promise<void> {
+  async refresh(): Promise<{ refreshToken: string; accessToken: string }> {
     if (this.refreshToken === null) {
       throw new RefreshTokenNotFoundError();
     }
@@ -71,6 +71,7 @@ export class SimicApiClient {
       ).json();
       this.refreshToken = refreshToken;
       this.accessToken = accessToken;
+      return { accessToken, refreshToken };
     } catch (err) {
       throw new RefreshError(err);
     }
