@@ -22,13 +22,22 @@ export class SimicApiClient {
     private refreshToken: string | null
   ) {}
 
-  async authorize(loginId: string): Promise<void> {
+  async authorize(
+    loginId: string
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     if (this.accessToken === null && this.refreshToken === null) {
       const { accessToken, refreshToken } = await (
         await fetch(`${this.endPoint}/${loginId}/authorize`, { method: "post" })
       ).json();
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
+      return { accessToken, refreshToken };
+    } else if (this.accessToken === null) {
+      throw new AccessTokenNotFoundError();
+    } else if (this.refreshToken === null) {
+      throw new RefreshTokenNotFoundError();
+    } else {
+      return { accessToken: this.accessToken, refreshToken: this.refreshToken };
     }
   }
 
