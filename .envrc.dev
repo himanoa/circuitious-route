@@ -1,0 +1,3 @@
+export APP_ENDPOINT="http://localhost:3001"
+export DISCORD_TOKEN="NjkzMzAzNDMyNDg4MTU3MjI1.Xn7Hng.691uzRn7PG5_gB7B3St-6q9yoOs"
+export LOGIN_URL_API="http://localhost:3001/login-url"
