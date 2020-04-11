@@ -22,13 +22,22 @@ export class SimicApiClient {
     private refreshToken: string | null
   ) {}
 
-  async authorize(loginId: string): Promise<void> {
+  async authorize(
+    loginId: string
+  ): Promise<{ accessToken: string; refreshToken: string }> {
     if (this.accessToken === null && this.refreshToken === null) {
       const { accessToken, refreshToken } = await (
         await fetch(`${this.endPoint}/${loginId}/authorize`, { method: "post" })
       ).json();
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
+      return { accessToken, refreshToken };
+    } else if (this.accessToken === null) {
+      throw new AccessTokenNotFoundError();
+    } else if (this.refreshToken === null) {
+      throw new RefreshTokenNotFoundError();
+    } else {
+      return { accessToken: this.accessToken, refreshToken: this.refreshToken };
     }
   }
 
@@ -56,7 +65,7 @@ export class SimicApiClient {
     }
   }
 
-  async refresh(): Promise<void> {
+  async refresh(): Promise<{ refreshToken: string; accessToken: string }> {
     if (this.refreshToken === null) {
       throw new RefreshTokenNotFoundError();
     }
@@ -71,6 +80,7 @@ export class SimicApiClient {
       ).json();
       this.refreshToken = refreshToken;
       this.accessToken = accessToken;
+      return { accessToken, refreshToken };
     } catch (err) {
       throw new RefreshError(err);
     }
