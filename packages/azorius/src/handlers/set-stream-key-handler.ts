@@ -20,7 +20,7 @@ export class SetStreamKeyHandler implements Handler {
       msg.reply(
         "ストリームキーの設定をするためにDirectMessageを開いてください"
       );
-      msg.author.send(`${join(process.env.LOGIN_URL_API, loginId)}`);
+      msg.author.send(`${join(process.env.LOGIN_URL as string, loginId)}`);
     } else {
       throw new Error("LOGIN_URL_API is not defined");
     }
