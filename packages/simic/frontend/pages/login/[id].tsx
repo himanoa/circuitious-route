@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import{ useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import { SimicApiClient } from "../../src/api-client"
 import { Typography } from "@material-ui/core"
 
@@ -11,14 +10,15 @@ const Index: React.FC = () => {
   useEffect(() => {
     (async () => {
       try {
+        const id = router.query.id as string
         let accessToken = localStorage.getItem("accessToken");
         let refreshToken = localStorage.getItem("refreshToken");
 
         const api = new SimicApiClient(process.env.APP_ENDPOINT, accessToken, refreshToken)
         if(!(accessToken && refreshToken)){
-          let { accessToken, refreshToken } = await api.authorize(router.query.id as string)
-          localStorage.setItem("accessToken", accessToken)
-          localStorage.setItem("refreshToken", refreshToken)
+          let authorizeResponse = await api.authorize(id)
+          localStorage.setItem("accessToken", authorizeResponse.accessToken)
+          localStorage.setItem("refreshToken", authorizeResponse.refreshToken)
         }
         router.push("/")
       } catch(err) {

@@ -19,7 +19,14 @@ export const verifyHandler = (deps: {
       SQL`SELECT * FROM profiles WHERE discord_id = ${discordId};`
     );
     res.status(200).json({
-      profiles,
+      profiles: profiles.map(
+        (p: { stream_key: string; discord_id: string }) => {
+          return {
+            streamKey: p.stream_key,
+            discordId: p.discord_id,
+          };
+        }
+      ),
       discordId,
     });
   } catch (err) {

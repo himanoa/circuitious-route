@@ -25,7 +25,7 @@ export class SimicApiClient {
   async authorize(
     loginId: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
-    if (this.accessToken === null && this.refreshToken === null) {
+    if (this.accessToken == null && this.refreshToken == null) {
       const { accessToken, refreshToken } = await (
         await fetch(`${this.endPoint}/${loginId}/authorize`, { method: "post" })
       ).json();
@@ -41,7 +41,8 @@ export class SimicApiClient {
     }
   }
 
-  async verify(): Promise<{ profiles: Profile[] }> {
+  async verify(o?: { retry: boolean }): Promise<{ profiles: Profile[] }> {
+    const options = o || { retry: true };
     if (this.accessToken === null) {
       throw new AccessTokenNotFoundError();
     }
@@ -58,8 +59,10 @@ export class SimicApiClient {
         this.refreshToken !== null
       ) {
         // TODO: ちゃんとリトライしたほうが良い
-        await this.refresh();
-        await this.verify();
+        if (options.retry) {
+          const foo = await this.refresh();
+          await this.verify({ retry: false });
+        }
       }
       throw new VerifyError(err);
     }
@@ -88,12 +91,13 @@ export class SimicApiClient {
 
   async upsertProfile(profiles: Profile[]): Promise<void> {
     try {
+      console.dir(profiles);
       const response = await fetch(`${this.endPoint}/upsert-profiles`, {
-        method: "post",
+        method: "put",
         body: JSON.stringify({ profiles }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Barer ${this.accessToken}",
+          Authorization: `Barer ${this.accessToken}`,
         },
       });
       if (response.status === 401) throw new InvalidAccessTokenError();
