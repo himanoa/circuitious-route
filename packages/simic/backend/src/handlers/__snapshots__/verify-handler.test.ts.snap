@@ -18,7 +18,10 @@ exports[`verifyHandler when verify successful should be failed 2`] = `
 Object {
   "discordId": "12123123",
   "profiles": Array [
-    1,
+    Object {
+      "discordId": undefined,
+      "streamKey": undefined,
+    },
   ],
 }
 `;
