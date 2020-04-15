@@ -31,8 +31,25 @@ const Index: React.FC = () => {
   const [ pageLoading, setPageLoading ] = useState(true)
   const [streamKey, setStreamKey] = useState("")
   const handleStreamKeyInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => setStreamKey(e.target.value), [])
+  const handleStreamKeySubmit = useCallback(() => {
+    (async() => {
+      const api = new SimicApiClient(process.env.APP_ENDPOINT, window.localStorage.getItem("accessToken"), window.localStorage.getItem("refreshToken"))
+      await api.upsertProfile([
+        {streamKey: streamKey}
+      ])
+    })()
+  }, [streamKey])
+
   useEffect(() => {
-    const api = new SimicApiClient(process.env.APP_ENDPOINT, window.localStorage.getItem("accessToken"), window.localStorage.getItem("refreshToken"))
+    (async() => {
+      const api = new SimicApiClient(process.env.APP_ENDPOINT, window.localStorage.getItem("accessToken"), window.localStorage.getItem("refreshToken"))
+      const {profiles} = await api.verify()
+      console.dir(profiles)
+      if(profiles.length !== 0) {
+        setStreamKey(profiles[0].streamKey)
+      }
+      setPageLoading(false)
+    })()
   }, [])
 
   if(pageLoading) {
@@ -68,7 +85,7 @@ const Index: React.FC = () => {
               </Grid>
               <Grid item>
                 <ButtonGroup>
-                  <Button color="primary" variant="contained">
+                  <Button color="primary" variant="contained" onClick={handleStreamKeySubmit}>
                     ストリームキーの設定の保存
                   </Button>
                   <Button color="secondary" variant="contained">

@@ -8,6 +8,7 @@
     "watch": "nodemon"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
     "@types/express": "^4.17.3",
     "@types/jest": "^25.1.4",
     "@types/jsonwebtoken": "^8.3.8",
@@ -31,6 +32,7 @@
   "dependencies": {
     "@japan-d2/schema": "^0.0.17",
     "@types/json-schema": "^7.0.4",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",

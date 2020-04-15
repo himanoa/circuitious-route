@@ -9,6 +9,7 @@ import { verifyHandler } from "./handlers/verify-handler";
 import jwt from "jsonwebtoken";
 import { readFileSync } from "fs";
 import morgan from "morgan";
+import cors from "cors";
 
 if (typeof process.env.DATABASE_PATH !== "string") {
   throw Error("Enviroment variable not found: DATABASE_PATH");
@@ -22,6 +23,10 @@ if (typeof process.env.PUBLIC_KEY_PATH !== "string") {
   throw Error("Enviroment variable not found: PRIVATE_KEY_PATH");
 }
 
+if (typeof process.env.ACCESS_CONTROL_ALLOW_ORIGIN !== "string") {
+  throw Error("Enviroment variable not found: ACCESS_CONTROL_ALLOW_ORIGIN");
+}
+
 const privateKey = readFileSync(process.env.PRIVATE_KEY_PATH);
 const publicKey = readFileSync(process.env.PUBLIC_KEY_PATH);
 const db = sqlite.open(process.env.DATABASE_PATH, { promise: Promise });
@@ -29,6 +34,11 @@ const db = sqlite.open(process.env.DATABASE_PATH, { promise: Promise });
 const app = Express.default();
 app.use(morgan("combined"));
 app.use(Express.json());
+app.use(
+  cors({
+    origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
+  })
+);
 
 function runAsyncWrapper(
   callback: (

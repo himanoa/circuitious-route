@@ -1,3 +1,5 @@
-export DATABASE_PATH="../../data/database.sqlite3"
-export PRIVATE_KEY_PATH="../../data/simic.private.key"
-export PUBLIC_KEY_PATH="../../data/simic.private.key.pub"
+source_up
+export DATABASE_PATH="../../../data/database.sqlite3"
+export PRIVATE_KEY_PATH="../../../data/simic.key"
+export PUBLIC_KEY_PATH="../../../data/simic.key.pub"
+export PORT="3001"
