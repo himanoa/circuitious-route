@@ -1,3 +1,6 @@
 export APP_ENDPOINT="http://localhost:3001"
 export DISCORD_TOKEN="YOUR DISCORD TOKEN"
 export LOGIN_URL_API="http://localhost:3001/login-url"
+export LOGIN_URL="http://localhost:3000/login"
+export ACCESS_CONTROL_ALLOW_ORIGIN="*"
+export REDIS_URL=""
