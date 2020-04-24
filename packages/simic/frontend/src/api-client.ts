@@ -27,15 +27,17 @@ export class SimicApiClient {
     loginId: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
     if (this.accessToken == null && this.refreshToken == null) {
-      const { accessToken, refreshToken } = await (
-        await fetch(`${this.endPoint}/${loginId}/authorize`, { method: "post" })
-      ).json();
+      const loginResponse = await fetch(
+        `${this.endPoint}/${loginId}/authorize`,
+        { method: "post" }
+      );
+      const { accessToken, refreshToken } = await loginResponse.json();
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
       return { accessToken, refreshToken };
-    } else if (this.accessToken === null) {
+    } else if (this.accessToken == null) {
       throw new AccessTokenNotFoundError();
-    } else if (this.refreshToken === null) {
+    } else if (this.refreshToken == null) {
       throw new RefreshTokenNotFoundError();
     } else {
       return { accessToken: this.accessToken, refreshToken: this.refreshToken };
@@ -61,7 +63,7 @@ export class SimicApiClient {
       ) {
         // TODO: ちゃんとリトライしたほうが良い
         if (options.retry) {
-          const foo = await this.refresh();
+          await this.refresh();
           await this.verify({ retry: false });
         }
       }

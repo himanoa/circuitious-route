@@ -20,7 +20,7 @@ if (typeof process.env.REDIS_URL !== "string") {
 
 const redisClient = redis.createClient(process.env.REDIS_URL);
 redisClient.on("error", (error) => console.error(error));
-const publishEvent = promisify(redisClient.publish);
+const publishEvent = promisify(redisClient.publish.bind(redisClient));
 
 if (typeof process.env.DATABASE_PATH !== "string") {
   throw Error("Enviroment variable not found: DATABASE_PATH");
@@ -148,7 +148,7 @@ app.post(
         jwt.verify(token, publicKey, { algorithms: ["RS256"] }) as any,
       publishEvent: async (e) => {
         if (e.type === "start-streaming") {
-          await publishEvent(e.payload.discordId, e.type);
+          await publishEvent(e.payload.discordId, JSON.stringify(e));
           return;
         }
         throw new Error(`${e.type} is not start-streaming event`);
