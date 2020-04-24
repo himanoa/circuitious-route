@@ -10,6 +10,15 @@ import jwt from "jsonwebtoken";
 import { readFileSync } from "fs";
 import morgan from "morgan";
 import cors from "cors";
+import redis from "redis";
+import { promisify } from "util";
+
+if (typeof process.env.REDIS_URL !== "string") {
+  throw Error("Enviroment variable not found: REDIS_URL");
+}
+
+const redisClient = redis.createClient(process.env.REDIS_URL);
+redisClient.on("error", (error) => console.error(error));
 
 if (typeof process.env.DATABASE_PATH !== "string") {
   throw Error("Enviroment variable not found: DATABASE_PATH");
