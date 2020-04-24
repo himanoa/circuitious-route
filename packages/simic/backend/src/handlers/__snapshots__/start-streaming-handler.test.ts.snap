@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`start-streaming-handler when verify failed should be failed 1`] = `
+Object {
+  "error": [Error: doo],
+}
+`;
+
+exports[`start-streaming-handler when verify successful should be failed 1`] = `Object {}`;

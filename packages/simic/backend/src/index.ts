@@ -6,6 +6,7 @@ import { issueAuthorizedTokenHandler } from "./handlers/issue-authorized-token-h
 import { upsertProfileHandler } from "./handlers/upsert-profiles-handler";
 import { refreshTokenHandler } from "./handlers/refresh-token-handler";
 import { verifyHandler } from "./handlers/verify-handler";
+import { startStreamingHandler } from "./handlers/start-streaming-handler";
 import jwt from "jsonwebtoken";
 import { readFileSync } from "fs";
 import morgan from "morgan";
@@ -19,6 +20,7 @@ if (typeof process.env.REDIS_URL !== "string") {
 
 const redisClient = redis.createClient(process.env.REDIS_URL);
 redisClient.on("error", (error) => console.error(error));
+const publishEvent = promisify(redisClient.publish);
 
 if (typeof process.env.DATABASE_PATH !== "string") {
   throw Error("Enviroment variable not found: DATABASE_PATH");
@@ -134,6 +136,23 @@ app.post(
           algorithm: "RS256",
           expiresIn: 60 * 60,
         }),
+    })
+  )
+);
+
+app.post(
+  "/start-streaming",
+  runAsyncWrapper(
+    startStreamingHandler({
+      verify: (token) =>
+        jwt.verify(token, publicKey, { algorithms: ["RS256"] }) as any,
+      publishEvent: async (e) => {
+        if (e.type === "start-streaming") {
+          await publishEvent(e.payload.discordId, e.type);
+          return;
+        }
+        throw new Error(`${e.type} is not start-streaming event`);
+      },
     })
   )
 );
