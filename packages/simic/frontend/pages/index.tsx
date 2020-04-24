@@ -40,6 +40,13 @@ const Index: React.FC = () => {
     })()
   }, [streamKey])
 
+  const handleStartStreamingSubmit = useCallback(() => {
+    (async() => {
+      const api = new SimicApiClient(process.env.APP_ENDPOINT, window.localStorage.getItem("accessToken"), window.localStorage.getItem("refreshToken"))
+      await api.startStreaming()
+    })()
+  }, [streamKey])
+
   useEffect(() => {
     (async() => {
       const api = new SimicApiClient(process.env.APP_ENDPOINT, window.localStorage.getItem("accessToken"), window.localStorage.getItem("refreshToken"))
@@ -88,7 +95,7 @@ const Index: React.FC = () => {
                   <Button color="primary" variant="contained" onClick={handleStreamKeySubmit}>
                     ストリームキーの設定の保存
                   </Button>
-                  <Button color="secondary" variant="contained">
+                  <Button color="secondary" variant="contained" onClick={handleStartStreamingSubmit}>
                     配信の開始
                   </Button>
                 </ButtonGroup>

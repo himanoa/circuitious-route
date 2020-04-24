@@ -12,6 +12,7 @@ export class InvalidAccessTokenError extends SimicApiClientError {}
 export class VerifyError extends SimicApiClientError {}
 export class RefreshError extends SimicApiClientError {}
 export class UpsertError extends SimicApiClientError {}
+export class StartStreamingError extends SimicApiClientError {}
 
 export type Profile = { streamKey: string };
 
@@ -112,6 +113,29 @@ export class SimicApiClient {
         await this.verify();
       }
       throw new UpsertError(err);
+    }
+  }
+
+  async startStreaming(): Promise<void> {
+    try {
+      const response = await fetch(`${this.endPoint}/start-streaming`, {
+        method: "post",
+        headers: {
+          Authorization: `Barer ${this.accessToken}`,
+        },
+      });
+      if (response.status === 401) throw new InvalidAccessTokenError();
+      return await response.json();
+    } catch (err) {
+      if (
+        err instanceof InvalidAccessTokenError &&
+        this.refreshToken !== null
+      ) {
+        // TODO: ちゃんとリトライしたほうが良い
+        await this.refresh();
+        await this.verify();
+      }
+      throw new StartStreamingError(err);
     }
   }
 }
