@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import{ useRouter } from "next/router";
 import { SimicApiClient } from "../../src/api-client"
 import { Typography } from "@material-ui/core"
@@ -6,11 +6,14 @@ import { Typography } from "@material-ui/core"
 const Index: React.FC = () => {
   const router = useRouter()
   const [error, setError] = useState(false)
+  const id = router.query.id as string
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
+      if(id === undefined) {
+        return 
+      }
       try {
-        const id = router.query.id as string
         let accessToken = localStorage.getItem("accessToken");
         let refreshToken = localStorage.getItem("refreshToken");
 
@@ -25,7 +28,7 @@ const Index: React.FC = () => {
         setError(true)
       }
     })()
-  }, [])
+  }, [router.query])
 
   if(error) {
     return (

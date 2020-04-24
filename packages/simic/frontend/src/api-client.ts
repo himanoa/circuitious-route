@@ -12,6 +12,7 @@ export class InvalidAccessTokenError extends SimicApiClientError {}
 export class VerifyError extends SimicApiClientError {}
 export class RefreshError extends SimicApiClientError {}
 export class UpsertError extends SimicApiClientError {}
+export class StartStreamingError extends SimicApiClientError {}
 
 export type Profile = { streamKey: string };
 
@@ -26,15 +27,17 @@ export class SimicApiClient {
     loginId: string
   ): Promise<{ accessToken: string; refreshToken: string }> {
     if (this.accessToken == null && this.refreshToken == null) {
-      const { accessToken, refreshToken } = await (
-        await fetch(`${this.endPoint}/${loginId}/authorize`, { method: "post" })
-      ).json();
+      const loginResponse = await fetch(
+        `${this.endPoint}/${loginId}/authorize`,
+        { method: "post" }
+      );
+      const { accessToken, refreshToken } = await loginResponse.json();
       this.accessToken = accessToken;
       this.refreshToken = refreshToken;
       return { accessToken, refreshToken };
-    } else if (this.accessToken === null) {
+    } else if (this.accessToken == null) {
       throw new AccessTokenNotFoundError();
-    } else if (this.refreshToken === null) {
+    } else if (this.refreshToken == null) {
       throw new RefreshTokenNotFoundError();
     } else {
       return { accessToken: this.accessToken, refreshToken: this.refreshToken };
@@ -60,7 +63,7 @@ export class SimicApiClient {
       ) {
         // TODO: ちゃんとリトライしたほうが良い
         if (options.retry) {
-          const foo = await this.refresh();
+          await this.refresh();
           await this.verify({ retry: false });
         }
       }
@@ -112,6 +115,29 @@ export class SimicApiClient {
         await this.verify();
       }
       throw new UpsertError(err);
+    }
+  }
+
+  async startStreaming(): Promise<void> {
+    try {
+      const response = await fetch(`${this.endPoint}/start-streaming`, {
+        method: "post",
+        headers: {
+          Authorization: `Barer ${this.accessToken}`,
+        },
+      });
+      if (response.status === 401) throw new InvalidAccessTokenError();
+      return await response.json();
+    } catch (err) {
+      if (
+        err instanceof InvalidAccessTokenError &&
+        this.refreshToken !== null
+      ) {
+        // TODO: ちゃんとリトライしたほうが良い
+        await this.refresh();
+        await this.verify();
+      }
+      throw new StartStreamingError(err);
     }
   }
 }
