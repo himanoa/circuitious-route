@@ -17,6 +17,7 @@
     "@types/morgan": "^1.9.0",
     "@types/node-fetch": "^2.5.5",
     "@types/sinon": "^7.5.2",
+    "izett": "*",
     "jest": "^25.2.3",
     "jest-express": "^1.11.3",
     "meow": "^6.1.0",
