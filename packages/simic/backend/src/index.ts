@@ -158,5 +158,5 @@ app.post(
 );
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Simic backend app listening at localhost:3000");
+  console.log(`Simic backend app listening at localhost:${process.env.PORT || 3000}`);
 });
