@@ -9,3 +9,7 @@ Discord Bot
 #### Simic
 
 Backyard for streamer
+
+#### Izett
+
+pub/sub event message

@@ -1,5 +1,5 @@
 import * as Express from "express";
-import { Events } from "../events";
+import { Events } from "izett";
 import { TokenNotFoundError } from "../error";
 
 export const startStreamingHandler = (deps: {
