@@ -72,49 +72,74 @@ const Index: React.FC = () => {
       </div>
     )
   }
+
+  const LeftPane: React.FC = () => {
+    return <Grid
+      container
+      item
+      xs={8}
+      justify="center"
+      alignContent="center"
+      alignItems="center"
+      direction="column"
+    >
+      <Grid item>
+        <p>no content</p>
+      </Grid>
+    </Grid>
+  }
+
+  const RightPane: React.FC = () => {
+    return <Grid
+      container
+      item
+      xs={4}
+      justify="center"
+      alignContent="center"
+      alignItems="center"
+      direction="column"
+    >
+      <Grid item>
+        <Paper className={classes.paper} >
+          <Grid container spacing={10} justify="center" direction="column" alignItems="center">
+            <Grid item direction="column">
+              <FormControl>
+                <TextField label="ストリームキー" onChange={handleStreamKeyInputChange} value={streamKey}></TextField>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <ButtonGroup>
+                <Button color="primary" variant="contained" onClick={handleStreamKeySubmit}>
+                  ストリームキーの設定の保存
+                </Button>
+                <Button color="secondary" variant="contained" onClick={handleStartStreamingSubmit}>
+                  配信の開始
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
+      <Grid item spacing={10}>
+        <Paper className={classes.commentPaper}>
+          <Grid container spacing={5} direction="column">
+            <Grid item>
+              <Typography variant="subtitle1" component="h2">コメント</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>配信が開始されたらここにコメントが流れます。</Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
+    </Grid>
+  }
+
   return (
     <div className={classes.root}>
-      <Grid
-        container
-        justify="center"
-        alignContent="center"
-        alignItems="center"
-        direction="column"
-        spacing={10}
-      >
-        <Grid item>
-          <Paper className={classes.paper} >
-            <Grid container spacing={10} justify="center" direction="column" alignItems="center">
-              <Grid item direction="column">
-                <FormControl>
-                  <TextField label="ストリームキー" onChange={handleStreamKeyInputChange} value={streamKey}></TextField>
-                </FormControl>
-              </Grid>
-              <Grid item>
-                <ButtonGroup>
-                  <Button color="primary" variant="contained" onClick={handleStreamKeySubmit}>
-                    ストリームキーの設定の保存
-                  </Button>
-                  <Button color="secondary" variant="contained" onClick={handleStartStreamingSubmit}>
-                    配信の開始
-                  </Button>
-                </ButtonGroup>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
-        <Grid item spacing={10}>
-          <Paper className={classes.commentPaper}>
-            <Grid container spacing={5} direction="column">
-              <Grid item>
-                <Typography variant="subtitle1" component="h2">コメント</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>配信が開始されたらここにコメントが流れます。</Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
+      <Grid container>
+        <LeftPane />
+        <RightPane />
       </Grid>
     </div>
   );
