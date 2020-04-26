@@ -15,6 +15,7 @@
     "packages/azorius",
     "packages/simic/backend",
     "packages/izett",
+    "packages/dimir",
     "packages/simic/frontend"
   ],
   "devDependencies": {
