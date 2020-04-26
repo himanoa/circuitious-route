@@ -7,8 +7,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier .",
+    "prettier": "prettier --write packages/**/*.ts packages/**/*.tsx",
+    "prettier:check": "prettier packages/**/*.ts packages/**/*.tsx",
     "test": "jest"
   },
   "workspaces": [

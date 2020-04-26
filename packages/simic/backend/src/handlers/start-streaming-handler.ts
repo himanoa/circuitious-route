@@ -25,7 +25,6 @@ export const startStreamingHandler = (deps: {
     if (err instanceof TokenNotFoundError) {
       res.status(401).json({ error: err });
     }
-    console.dir(err);
     res.status(500).json({ error: err });
   }
 };
