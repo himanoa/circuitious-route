@@ -18,12 +18,15 @@ const ws = new WebSocket.Server({
 
 const currentConnections: WebSocket[] = [];
 
-subscriber.on("message", (msg) => {
+subscriber.on("pmessage", (_pattern, _channel, msg) => {
   for (const connection of currentConnections) {
     connection.send(msg);
   }
 });
 
-ws.on("connection", (ws) => {
-  currentConnections.push(ws);
+subscriber.psubscribe("*");
+
+ws.on("connection", (socket) => {
+  console.log("connected");
+  currentConnections.push(socket);
 });
