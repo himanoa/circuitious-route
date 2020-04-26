@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest",
+    "watch": "nodemon"
+  },
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/redis": "^2.8.18",
