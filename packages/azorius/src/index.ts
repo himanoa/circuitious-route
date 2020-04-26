@@ -2,7 +2,7 @@ import { Client } from "discord.js";
 import { getLogger, configure } from "log4js";
 import { routes } from "./default-routes";
 import redis from "redis";
-import { handler } from "./handlers/pubsub"
+import { handler } from "./handlers/pubsub";
 
 configure({
   appenders: { out: { type: "stdout" }, err: { type: "stderr" } },
@@ -32,7 +32,7 @@ publisher.on("error", (error) => console.error(error));
 
 subscriber.on("message", (channel, value) => {
   logger.info(`${channel}: ${value}`);
-  handler({ discordClient: client, logger })(JSON.parse(value))
+  handler({ discordClient: client, logger })(JSON.parse(value));
 });
 
 client.on("ready", () => {
