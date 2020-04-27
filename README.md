@@ -13,3 +13,7 @@ Backyard for streamer
 #### Izett
 
 pub/sub event message
+
+#### Dimir
+
+pub/sub translator for web frontend

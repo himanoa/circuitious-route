@@ -1,3 +1,4 @@
 import { StartStreamingEvent } from "./start-streaming-event";
-export { StartStreamingEvent };
-export declare type Events = StartStreamingEvent;
+import { StartSubscribeEvent } from "./start-subscribe-event";
+export { StartStreamingEvent, StartSubscribeEvent };
+export declare type Events = StartStreamingEvent | StartSubscribeEvent;
