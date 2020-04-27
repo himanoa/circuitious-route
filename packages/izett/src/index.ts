@@ -1,4 +1,5 @@
 import { StartStreamingEvent } from "./start-streaming-event";
+import { StartSubscribeEvent } from "./start-subscribe-event";
 
-export { StartStreamingEvent };
-export type Events = StartStreamingEvent;
+export { StartStreamingEvent, StartSubscribeEvent };
+export type Events = StartStreamingEvent | StartSubscribeEvent;
