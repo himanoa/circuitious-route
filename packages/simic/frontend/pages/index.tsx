@@ -28,8 +28,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Index: React.FC = () => {
   const classes = useStyles();
+
   const [pageLoading, setPageLoading] = useState(true);
   const [streamKey, setStreamKey] = useState("");
+
   const handleStreamKeyInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setStreamKey(e.target.value),
     []
@@ -56,7 +58,9 @@ const Index: React.FC = () => {
     })();
   }, [streamKey]);
 
+
   useEffect(() => {
+    let socket: WebSocket | null = null;
     (async () => {
       const api = new SimicApiClient(
         process.env.APP_ENDPOINT,
@@ -69,7 +73,24 @@ const Index: React.FC = () => {
         setStreamKey(profiles[0].streamKey);
       }
       setPageLoading(false);
+
+      socket = new WebSocket(process.env.PUBSUB_ENDPOINT)
+      socket.onopen = () => {
+        if(socket) {
+          socket.send(JSON.stringify({
+            type: "start-subscribe",
+            payload: {
+              discordId: profiles[0].discordId
+            }
+          }))
+        }
+      }
     })();
+    return () => {
+      if(socket) {
+        socket.close()
+      }
+    }
   }, []);
 
   if (pageLoading) {

@@ -33,9 +33,10 @@ subscriber.on("pmessage", (_pattern, _channel, msg) => {
 subscriber.psubscribe("*");
 
 ws.on("connection", (socket) => {
-  ws.on("message", (msg) => {
-    const payload = JSON.parse(msg);
+  socket.on("message", (msg) => {
+    const payload = JSON.parse(msg.toString());
     if (payload.type === "start-subscribe") {
+      console.log(`Start subscription ${payload.payload.discordId}`);
       startSubscribeHandler({
         connections,
       })(payload, socket);

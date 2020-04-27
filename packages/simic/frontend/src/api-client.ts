@@ -14,7 +14,7 @@ export class RefreshError extends SimicApiClientError {}
 export class UpsertError extends SimicApiClientError {}
 export class StartStreamingError extends SimicApiClientError {}
 
-export type Profile = { streamKey: string };
+export type Profile = { streamKey: string; discordId: string };
 
 export class SimicApiClient {
   constructor(
@@ -92,7 +92,7 @@ export class SimicApiClient {
     }
   }
 
-  async upsertProfile(profiles: Profile[]): Promise<void> {
+  async upsertProfile(profiles: { streamKey: string }[]): Promise<void> {
     try {
       console.dir(profiles);
       const response = await fetch(`${this.endPoint}/upsert-profiles`, {
